@@ -1,9 +1,9 @@
-import Express from "express";
+import express from "express";
 import cors from 'cors';
-import mainRoutes from './routes/mainRouters';
-import donationRouters from './routes/donationRouters';
+import mainRoutes from './routes/mainRouters.js';
+import donationRouters from './routes/donationRouters.js';
 
-const app = Express();
+const app = express();
 const port = 3000;
 
 app.use(cors());
