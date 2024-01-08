@@ -1,7 +1,7 @@
 import express from "express";
 import cors from 'cors';
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { dirname, join } from 'path';
 import mainRoutes from './routes/mainRouters.js';
 import donationRoutes from './routes/donationRouters.js';
 
@@ -19,10 +19,14 @@ app.use('/main', mainRoutes);
 app.use('/donations', donationRoutes);
 
 app.use(express.static('public'));
-app.use(express.static(dirname(__dirname, 'client')));
+app.use(express.static(join(__dirname, 'client')));
+
+app.get('/donation.html', (req, res) => {
+    res.sendFile(join(__dirname, '../client/donation.html'));
+});
 
 app.get('*', (req, res) => {
-    res.sendFile('./client/index.html', { root: dirname(__dirname, 'client') });
+    res.sendFile(join(__dirname, '../client/index.html'));
 });
 
 app.listen(port, () => {
