@@ -1,0 +1,21 @@
+# Dependency directories
+node_modules/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# .env file
+.env
+
+# macOS
+.DS_Store
+
+# Logs
+logs
+*.log
+
+# VS Code directory
+.vscode/
