@@ -1,6 +1,6 @@
-import donationShelter from '../models/donationShelter.js';
+import DonationShelter from '../models/donationShelter.js';
 
-export const submitDonation = (req, res) => {
+export const submitDonation = async (req, res) => {
     try {
         const {
             donorName,
@@ -20,8 +20,8 @@ export const submitDonation = (req, res) => {
             donationDetails
         };
 
-        // 기부 내역을 메모리에 저장
-        donationShelter.addDonation(newDonation);
+        // MongoDB에 기부 내역 저장
+        await DonationShelter.create(newDonation);
 
         res.status(200).json({ message: 'Donation submitted successfully!', donation: newDonation });
     } catch (error) {

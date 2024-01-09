@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Make a Donation</title>
+    <style>
+        /* Your styling for the donation page goes here */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333333;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Make a Donation</h1>
+        <form id="donationForm">
+            <label for="donorName">Donor Name:</label>
+            <input type="text" id="donorName" name="donorName" required>
+
+            <label for="donationType">Donation Type:</label>
+            <!-- <input type="text" id="donationType" name="donationType" required> -->
+            <select id="donationType" name="donationType" required>
+                <option value="money">Money</option>
+                <option value="food">Food</option>
+                <option value="clothing">Clothing</option>
+                <option value="other">Other</option>
+            </select>
+
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" required>
+
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" name="amount" required>
+
+            <label for="donationDate">Donation Date:</label>
+            <input type="date" id="donationDate" name="donationDate" required>
+
+            <label for="donationDetails">Donation Details:</label>
+            <textarea id="donationDetails" name="donationDetails" rows="4"></textarea>
+
+            <button type="submit">Submit Donation</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('donationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+    
+            // 폼 데이터를 FormData 객체로 가져오기
+            const formData = new FormData(event.target);
+    
+            // FormData 객체를 JSON으로 변환
+            const jsonData = {};
+            formData.forEach((value, key) => {
+                jsonData[key] = value;
+            });
+    
+            // 서버로 데이터 전송
+            fetch('http://localhost:3000/main/submitDonation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(jsonData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Donation submitted!');
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+    
+</body>
+</html>

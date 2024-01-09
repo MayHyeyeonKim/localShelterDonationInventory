@@ -1,26 +1,14 @@
-// donationShelter.js
-import readline from 'readline';
+import mongoose from 'mongoose';
 
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
+const donationSchema = new mongoose.Schema({
+    donorName: String,
+    donationType: String,
+    quantity: Number,
+    amount: Number,
+    donationDate: Date,
+    donationDetails: String,
 });
 
-class DonationShelter {
-    constructor() {
-        this.donations = [];
-    }
+const DonationShelter = mongoose.model('DonationShelter', donationSchema);
 
-    addDonation(newDonation) {
-        this.donations.push(newDonation);
-        console.log('New donation added:', newDonation);
-    }
-
-    getDonations() {
-        return this.donations;
-    }
-}
-
-const shelter = new DonationShelter();
-
-export default shelter;
+export default DonationShelter;
