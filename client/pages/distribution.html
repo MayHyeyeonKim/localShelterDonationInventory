@@ -13,6 +13,7 @@
         <ul>
             <li><a href="/">Home</a></li>
             <li><a href="/donation.html">Donation</a></li>
+            <li><a href="/donationList.html">DonationList</a></li>
             <li><a href="/distribution.html">Distribution</a></li>
             <li id="loginNav"><a href="/login.html">Login</a></li>
             <li id="signupNav"><a href="/Signup.html">Signup</a></li>
@@ -36,35 +37,28 @@
         <label for="amount">Amount:</label>
         <input type="number" id="amount" name="amount" required><br>
 
-        <button type="button" onclick="logDonationDistribution()">Log Donation Distribution</button>
+        <button type="button" onclick="handleDonationDistribution()">Log Donation Distribution</button>
 
         <script>
-            // 사용자가 로그인되어 있는지 확인하는 함수 (이 함수는 애플리케이션에 맞게 구현되어야 합니다)
             async function checkAuthentication() {
                 try {
                     const response = await fetch('http://localhost:3000/checkAuthentication', {
                         method: 'GET',
-                        credentials: 'include', // Include credentials (cookies) in the request
+                        credentials: 'include',
                     });
 
                     if (response.ok) {
-                        // 사용자가 로그인되어 있으면 계속 진행
                         return true;
                     } else {
-                        // 사용자가 로그인되어 있지 않으면 로그인 페이지로 리디렉션
-                        window.location.href = '/login'; // Redirect to your login page
                         return false;
                     }
                 } catch (error) {
                     console.error('Error checking authentication:', error);
-                    // 에러 발생 시 로그인 페이지로 리디렉션
-                    window.location.href = '/login';
                     return false;
                 }
             }
 
-            async function logDonationDistribution() {
-                // 사용자가 로그인되어 있는지 확인
+            async function handleDonationDistribution() {
                 const isAuthenticated = await checkAuthentication();
 
                 if (isAuthenticated) {
@@ -100,14 +94,17 @@
                         console.error('Error logging Donation Distribution:', error);
                         alert('Internal Server Error');
                     }
+                } else {
+                    // 로그인되어 있지 않으면 로그인 팝업 띄우기
+                    alert('You are not logged in. Please log in to continue.');
+                    window.location.href = '/login.html'; // 로그인 페이지로 리디렉션
                 }
-                // 사용자가 로그인되어 있지 않으면 함수 종료
             }
         </script>
     </form>
 
     <footer>
-        <p>&copy; 2024 Your Website Name</p>
+        <p>&copy; 2024 May Hyeyeon Kim</p>
     </footer>
 </body>
 </html>

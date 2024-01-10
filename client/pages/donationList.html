@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/style.css">
+    <title>Donation List</title>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/donation.html">Donation</a></li>
+            <li><a href="/donationList.html">DonationList</a></li>
+            <li><a href="/distribution.html">Distribution</a></li>
+            <li id="loginNav"><a href="/login.html">Login</a></li>
+            <li id="signupNav"><a href="/Signup.html">Signup</a></li>
+            <li id="logoutNav" style="display: none;"><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+    <div>
+        <h1>Donation List</h1>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Donor Name</th>
+                <th>Donation Type</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+                <th>Donation Date</th>
+                <th>Donation Details</th>
+            </tr>
+        </thead>
+        <tbody id="donationListTableBody"></tbody>
+    </table>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/donations/getAllDonations')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Received data:', data);
+                    const donationListTableBody = document.getElementById('donationListTableBody');
+                    
+                    // Clear existing rows (optional)
+                    donationListTableBody.innerHTML = '';
+
+                    // Add new rows
+                    data.donations.forEach(donation => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${donation.donorName}</td>
+                            <td>${donation.donationType}</td>
+                            <td>${donation.quantity}</td>
+                            <td>${donation.amount}</td>
+                            <td>${donation.donationDate}</td>
+                            <td>${donation.donationDetails}</td>
+                        `;
+                        donationListTableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching donations:', error));
+        });
+    </script>
+    <footer>
+        <p>&copy; 2024 May Hyeyeon Kim</p>
+    </footer>
+</body>
+</html>

@@ -1,6 +1,6 @@
 
 import express from 'express';
-import { submitDonation } from '../controllers/mainController.js';
+import { submitDonation } from '../controllers/donationController.js';
 
 const mainRouter = express.Router();
 

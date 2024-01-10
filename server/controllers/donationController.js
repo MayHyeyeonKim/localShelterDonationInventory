@@ -29,3 +29,13 @@ export const submitDonation = async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 };
+
+export const getAllDonations = async (req, res) => {
+    try {
+        const allDonations = await DonationShelter.find();
+        res.status(200).json({ donations: allDonations });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+};
