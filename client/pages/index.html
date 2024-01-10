@@ -14,6 +14,7 @@
             <li><a href="/donation.html">Donation</a></li>
             <li><a href="/donationList.html">DonationList</a></li>
             <li><a href="/distribution.html">Distribution</a></li>
+            <li><a href="/donationReport.html">DonationReport</a></li>
             <li id="loginNav"><a href="/login.html">Login</a></li>
             <li id="signupNav"><a href="/Signup.html">Signup</a></li>
             <li id="logoutNav" style="display: none;"><a href="/logout">Logout</a></li>
@@ -30,59 +31,32 @@
     </footer>
 
     <script>
-        // 여기에 필요한 JavaScript 코드 추가
+        // 사용자 이름을 받아와서 네비게이션에 표시
+    function showWelcomeMessage(username) {
+        const welcomeUser = document.getElementById('welcomeUser');
+        welcomeUser.innerText = `Welcome, ${username}!`;
+        welcomeUser.style.display = 'block';
+    }
+
+    // 로그아웃 버튼을 클릭할 때 호출되는 함수
+    async function handleLogout() {
+        try {
+            const response = await fetch('/auth/logout', {
+                method: 'GET',
+            });
+
+            if (response.ok) {
+                alert('Logout successful!');
+                // 로그아웃 성공 후 필요한 동작 수행
+                // 예: 사용자 이름 숨기기, 로그인/로그아웃 버튼 갱신 등
+            } else {
+                alert('Failed to logout.');
+            }
+        } catch (error) {
+            console.error('Error during logout:', error);
+            alert('Internal Server Error');
+        }
+    }
     </script>
 </body>
 </html>
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Shelter Donation Inventory</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        .container {
-            text-align: center;
-            padding: 20px;
-            border-radius: 8px;
-            background-color: #ffffff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            color: #333333;
-        }
-
-        p {
-            color: #666666;
-        }
-
-        a {
-            color: #007bff;
-            text-decoration: none;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Welcome to May's Shelter Donation Inventory!</h1>
-        <p>Explore our inventory and contribute to a good cause.</p>
-        <p>For more information, visit our <a href="../donation.html">website</a>.</p>
-        <a href="../distribution.html" class="nav-link">View Donation Distribution</a>
-
-    </div>
-</body>
-</html> -->

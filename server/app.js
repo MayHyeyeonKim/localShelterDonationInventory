@@ -11,6 +11,7 @@ import mainRoutes from './routes/mainRouters.js';
 import donationRoutes from './routes/donationRouters.js';
 import distributionRoutes from './routes/distributionRouters.js';
 import authRouter from './routes/authRouter.js';
+import reportRouter from './routes/reportRouter.js';
 import './middleware/passport.js';
 
 import dotenv from 'dotenv';
@@ -51,6 +52,7 @@ app.use('/auth',authRouter);
 app.use('/main', mainRoutes);
 app.use('/donations', donationRoutes);
 app.use('/distributions', distributionRoutes);
+app.use('/reports', reportRouter);
 
 app.use(express.static('public'));
 app.use(express.static(join(__dirname, 'client')));
@@ -61,6 +63,10 @@ app.get('/Signup.html', (req, res) => {
 
 app.get('/login.html', (req, res) => {
     res.sendFile(join(__dirname, '../client/pages/login.html'));
+});
+
+app.get('/donationReport.html', (req, res) => {
+  res.sendFile(join(__dirname, '../client/pages/donationReport.html'));
 });
 
 app.get('/distribution.html', (req, res) => {

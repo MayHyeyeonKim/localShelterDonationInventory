@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/style.css">
+    <title>Donation Reports</title>
+</head>
+<body>
+    <h1>Donation Reports</h1>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/donation.html">Donation</a></li>
+            <li><a href="/donationList.html">DonationList</a></li>
+            <li><a href="/distribution.html">Distribution</a></li>
+            <li><a href="/donationReport.html">DonationReport</a></li>
+            <li id="loginNav"><a href="/login.html">Login</a></li>
+            <li id="signupNav"><a href="/Signup.html">Signup</a></li>
+            <li id="logoutNav" style="display: none;"><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <h2>Donation Status by Type</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Donation Type</th>
+                    <th>Donation Count</th>
+                    <th>Total Amount</th>
+                </tr>
+            </thead>
+            <tbody id="donationStatusTableBody">
+                <!-- Data will be inserted dynamically here -->
+            </tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>Donation Donor Summary Report</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Donor Name</th>
+                    <th>Total Donation Amount</th>
+                </tr>
+            </thead>
+            <tbody id="donorSummaryTableBody">
+                <!-- Data will be inserted dynamically here -->
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 May Hyeyeon Kim</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                // Fetch donation reports data from the server
+                const response = await fetch('/reports/donation-reports');
+                const data = await response.json();
+    
+                // Function to create table rows based on the data
+                const createTableRows = (tableBody, rowData) => {
+                    rowData.forEach((row) => {
+                        const tr = document.createElement('tr');
+                        Object.values(row).forEach((value) => {
+                            const td = document.createElement('td');
+                            td.textContent = value;
+                            tr.appendChild(td);
+                        });
+                        tableBody.appendChild(tr);
+                    });
+                };
+    
+                // Populate Donation Status by Type table
+                const donationStatusTableBody = document.getElementById('donationStatusTableBody');
+                createTableRows(donationStatusTableBody, data.donationStatusByType);
+    
+                // Populate Donation Donor Summary Report table
+                const donorSummaryTableBody = document.getElementById('donorSummaryTableBody');
+                createTableRows(donorSummaryTableBody, data.donationDonorSummaryReport);
+            } catch (error) {
+                console.error('Error fetching donation reports:', error);
+            }
+        });
+    </script>
+</body>
+</html>
