@@ -1,4 +1,3 @@
-// app.js
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
@@ -7,11 +6,9 @@ import { dirname, join } from 'path';
 import session from 'express-session';
 import passport from 'passport';
 
-import mainRoutes from './routes/mainRouters.js';
 import donationRoutes from './routes/donationRouters.js';
 import distributionRoutes from './routes/distributionRouters.js';
 import authRouter from './routes/authRouter.js';
-import reportRouter from './routes/reportRouter.js';
 import './middleware/passport.js';
 
 import dotenv from 'dotenv';
@@ -44,15 +41,12 @@ app.use(session({
   },
 }));
 
-// Passport 초기화
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/auth',authRouter);
-app.use('/main', mainRoutes);
 app.use('/donations', donationRoutes);
 app.use('/distributions', distributionRoutes);
-app.use('/reports', reportRouter);
 
 app.use(express.static('public'));
 app.use(express.static(join(__dirname, 'client')));

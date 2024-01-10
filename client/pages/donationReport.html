@@ -20,9 +20,9 @@
             <li id="logoutNav" style="display: none;"><a href="/logout">Logout</a></li>
         </ul>
     </nav>
-
+    <h2>Donation Status by Type</h2>
     <section>
-        <h2>Donation Status by Type</h2>
+        
         <table>
             <thead>
                 <tr>
@@ -36,9 +36,9 @@
             </tbody>
         </table>
     </section>
-
+    <h2>Donation Donor Summary Report</h2>
     <section>
-        <h2>Donation Donor Summary Report</h2>
+        
         <table>
             <thead>
                 <tr>
@@ -59,7 +59,7 @@
         document.addEventListener('DOMContentLoaded', async () => {
             try {
                 // Fetch donation reports data from the server
-                const response = await fetch('/reports/donation-reports');
+                const response = await fetch('/distributions/donation-reports');
                 const data = await response.json();
     
                 // Function to create table rows based on the data

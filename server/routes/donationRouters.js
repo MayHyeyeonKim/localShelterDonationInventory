@@ -9,12 +9,5 @@ const donationRouter = express.Router();
 
 donationRouter.get('/getAllDonations', getAllDonations);
 donationRouter.post('/submitDonation', submitDonation);
-donationRouter.get('/donation.html', (req, res) => {
-    res.sendFile('donation.html', { root: path.join(__dirname, '../client') });
-});
-donationRouter.get('/getDonations', (req, res) => {
-    const allDonations = donationShelter.getDonations();
-    res.status(200).json({ donations: allDonations });
-});
 
 export default donationRouter;
