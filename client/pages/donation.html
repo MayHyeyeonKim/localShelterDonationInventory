@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/style.css">
+    <title>Make a Donation</title>
+</head>
+<body>
+    <h1>Make a Donation</h1>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/donation.html">Donation</a></li>
+            <li><a href="/distribution.html">Distribution</a></li>
+            <li id="loginNav"><a href="/login.html">Login</a></li>
+            <li id="signupNav"><a href="/Signup.html">Signup</a></li>
+            <li id="logoutNav" style="display: none;"><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+    <form id="donationForm">
+        <label for="donorName">Donor Name:</label>
+        <input type="text" id="donorName" name="donorName" required>
+
+        <label for="donationType">Donation Type:</label>
+        <!-- <input type="text" id="donationType" name="donationType" required> -->
+        <select id="donationType" name="donationType" required>
+            <option value="money">Money</option>
+            <option value="food">Food</option>
+            <option value="clothing">Clothing</option>
+            <option value="other">Other</option>
+        </select>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" required>
+
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" required>
+
+        <label for="donationDate">Donation Date:</label>
+        <input type="date" id="donationDate" name="donationDate" required>
+
+        <label for="donationDetails">Donation Details:</label>
+        <textarea id="donationDetails" name="donationDetails" rows="4"></textarea>
+
+        <button type="submit">Submit Donation</button>
+    </form>
+
+    <footer>
+        <p>&copy; 2024 Your Website Name</p>
+    </footer>
+
+    <script>
+        document.getElementById('donationForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+    
+            // 폼 데이터를 FormData 객체로 가져오기
+            const formData = new FormData(event.target);
+    
+            // FormData 객체를 JSON으로 변환
+            const jsonData = {};
+            formData.forEach((value, key) => {
+                jsonData[key] = value;
+            });
+    
+            // 서버로 데이터 전송
+            fetch('http://localhost:3000/main/submitDonation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(jsonData),
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Donation submitted!');
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+    
+</body>
+</html>

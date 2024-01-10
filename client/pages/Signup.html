@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/style.css">
+    <title>Login or Signup</title>
+</head>
+<body>
+    <h1>Signup</h1>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/donation.html">Donation</a></li>
+            <li><a href="/distribution.html">Distribution</a></li>
+            <li id="loginNav"><a href="/login.html">Login</a></li>
+            <li id="signupNav"><a href="/Signup.html">Signup</a></li>
+            <li id="logoutNav" style="display: none;"><a href="/logout">Logout</a></li>
+        </ul>
+    </nav>
+
+
+    <!-- 회원가입 폼 -->
+    <form id="signupForm" action="/signup" method="post">
+        <label for="signupUsername">Username:</label>
+        <input type="text" id="signupUsername" name="username" required><br>
+
+        <label for="signupPassword">Password:</label>
+        <input type="password" id="signupPassword" name="password" required><br>
+
+        <button type="submit">Signup</button>
+    </form>
+
+    <footer>
+        <p>&copy; 2024 Your Website Name</p>
+    </footer>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            // You can add custom logic here or submit the form using AJAX
+            alert('Login form submitted!');
+        });
+
+        document.getElementById('signupForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+            // You can add custom logic here or submit the form using AJAX
+            alert('Signup form submitted!');
+        });
+    </script>
+</body>
+</html>
