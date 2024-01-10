@@ -1,0 +1,69 @@
+<!-- distribution.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donation Distribution Form</title>
+</head>
+<body>
+    <h1>Donation Distribution Form</h1>
+
+    <form id="distributionForm">
+        <label for="distributionDate">Distribution Date:</label>
+        <input type="date" id="distributionDate" name="distributionDate" required><br>
+
+        <label for="distributionLocation">Distribution Location:</label>
+        <input type="text" id="distributionLocation" name="distributionLocation" required><br>
+
+        <label for="donationType">Donation Type:</label>
+        <input type="text" id="donationType" name="donationType" required><br>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" required><br>
+
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" required><br>
+
+        <button type="button" onclick="logDonationDistribution()">Log Donation Distribution</button>
+    </form>
+
+    <script>
+       async function logDonationDistribution() {
+            const distributionDate = document.getElementById('distributionDate').value;
+            const distributionLocation = document.getElementById('distributionLocation').value;
+            const donationType = document.getElementById('donationType').value;
+            const quantity = document.getElementById('quantity').value;
+            const amount = document.getElementById('amount').value;
+
+            try {
+                const response = await fetch('http://localhost:3000/distributions/submitDistribution', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        distributionDate,
+                        distributionLocation,
+                        donationType,
+                        quantity,
+                        amount,
+                    }),
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    alert(`Donation Distribution logged successfully!\n${JSON.stringify(result.distribution)}`);
+                } else {
+                    alert('Failed to log Donation Distribution.');
+                }
+            } catch (error) {
+                console.error('Error logging Donation Distribution:', error);
+                alert('Internal Server Error');
+            }
+        }
+    </script>
+</body>
+</html>

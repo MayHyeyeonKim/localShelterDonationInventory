@@ -5,6 +5,8 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import mainRoutes from './routes/mainRouters.js';
 import donationRoutes from './routes/donationRouters.js';
+import distributionRoutes from './routes/distributionRouters.js';
+
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -31,9 +33,14 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/main', mainRoutes);
 app.use('/donations', donationRoutes);
+app.use('/distributions', distributionRoutes); 
 
 app.use(express.static('public'));
 app.use(express.static(join(__dirname, 'client')));
+
+app.get('/distribution.html', (req, res) => {
+    res.sendFile(join(__dirname, '../client/distribution.html'));
+});
 
 app.get('/donation.html', (req, res) => {
     res.sendFile(join(__dirname, '../client/donation.html'));
