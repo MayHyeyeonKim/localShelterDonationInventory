@@ -1,110 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../styles/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles/style.css" />
     <title>Donation Distribution Form</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Donation Distribution Form</h1>
     <nav>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/donation.html">Donation</a></li>
-            <li><a href="/donationList.html">DonationList</a></li>
-            <li><a href="/distribution.html">Distribution</a></li>
-            <li id="loginNav"><a href="/login.html">Login</a></li>
-            <li id="signupNav"><a href="/Signup.html">Signup</a></li>
-            <li id="logoutNav" style="display: none;"><a href="/logout">Logout</a></li>
-        </ul>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/donation.html">Donation</a></li>
+        <li><a href="/donationList.html">DonationList</a></li>
+        <li><a href="/distribution.html">Distribution</a></li>
+        <li id="loginNav"><a href="/login.html">Login</a></li>
+        <li id="signupNav"><a href="/Signup.html">Signup</a></li>
+        <li id="logoutNav" style="display: none">
+          <a href="/logout">Logout</a>
+        </li>
+      </ul>
     </nav>
 
     <form id="distributionForm">
-        <label for="distributionDate">Distribution Date:</label>
-        <input type="date" id="distributionDate" name="distributionDate" required><br>
+      <label for="distributionDate">Distribution Date:</label>
+      <input
+        type="date"
+        id="distributionDate"
+        name="distributionDate"
+        required
+      /><br />
 
-        <label for="distributionLocation">Distribution Location:</label>
-        <input type="text" id="distributionLocation" name="distributionLocation" required><br>
+      <label for="distributionLocation">Distribution Location:</label>
+      <input
+        type="text"
+        id="distributionLocation"
+        name="distributionLocation"
+        required
+      /><br />
 
-        <label for="donationType">Donation Type:</label>
-        <input type="text" id="donationType" name="donationType" required><br>
+      <label for="donationType">Donation Type:</label>
+      <input type="text" id="donationType" name="donationType" required /><br />
 
-        <label for="quantity">Quantity:</label>
-        <input type="number" id="quantity" name="quantity" required><br>
+      <label for="quantity">Quantity:</label>
+      <input type="number" id="quantity" name="quantity" required /><br />
 
-        <label for="amount">Amount:</label>
-        <input type="number" id="amount" name="amount" required><br>
+      <label for="amount">Amount:</label>
+      <input type="number" id="amount" name="amount" required /><br />
 
-        <button type="button" onclick="handleDonationDistribution()">Log Donation Distribution</button>
-
-        <script>
-            async function checkAuthentication() {
-                try {
-                    const response = await fetch('http://localhost:3000/checkAuthentication', {
-                        method: 'GET',
-                        credentials: 'include',
-                    });
-
-                    if (response.ok) {
-                        return true;
-                    } else {
-                        return false;
-                    }
-                } catch (error) {
-                    console.error('Error checking authentication:', error);
-                    return false;
-                }
-            }
-
-            async function handleDonationDistribution() {
-                const isAuthenticated = await checkAuthentication();
-
-                if (isAuthenticated) {
-                    // 로그인되어 있으면 Donation Distribution 로깅 로직 계속 진행
-                    const distributionDate = document.getElementById('distributionDate').value;
-                    const distributionLocation = document.getElementById('distributionLocation').value;
-                    const donationType = document.getElementById('donationType').value;
-                    const quantity = document.getElementById('quantity').value;
-                    const amount = document.getElementById('amount').value;
-
-                    try {
-                        const response = await fetch('http://localhost:3000/distributions/submitDistribution', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                distributionDate,
-                                distributionLocation,
-                                donationType,
-                                quantity,
-                                amount,
-                            }),
-                        });
-
-                        if (response.ok) {
-                            const result = await response.json();
-                            alert(`Donation Distribution logged successfully!\n${JSON.stringify(result.distribution)}`);
-                        } else {
-                            alert('Failed to log Donation Distribution.');
-                        }
-                    } catch (error) {
-                        console.error('Error logging Donation Distribution:', error);
-                        alert('Internal Server Error');
-                    }
-                } else {
-                    // 로그인되어 있지 않으면 로그인 팝업 띄우기
-                    alert('You are not logged in. Please log in to continue.');
-                    window.location.href = '/login.html'; // 로그인 페이지로 리디렉션
-                }
-            }
-        </script>
+      <button type="button" onclick="handleDonationDistribution()">
+        Log Donation Distribution
+      </button>
     </form>
-
     <footer>
-        <p>&copy; 2024 May Hyeyeon Kim</p>
+      <p>&copy; 2024 May Hyeyeon Kim</p>
     </footer>
-</body>
+    <script>
+      async function checkAuthentication() {
+        try {
+          const response = await fetch(
+            "http://localhost:3000/distributions/checkAuthentication",
+            {
+              method: "GET",
+              credentials: "include",
+            }
+          );
+
+          if (response.ok) {
+            return true;
+          } else {
+            return false;
+          }
+        } catch (error) {
+          console.error("Error checking authentication:", error);
+          return false;
+        }
+      }
+
+      async function handleDonationDistribution() {
+  const isAuthenticated = await checkAuthentication();
+
+  if (isAuthenticated) {
+    const distributionDate = document.getElementById('distributionDate').value;
+    const distributionLocation = document.getElementById('distributionLocation').value;
+    const donationType = document.getElementById('donationType').value;
+    const quantity = document.getElementById('quantity').value;
+    const amount = document.getElementById('amount').value;
+
+    try {
+      const response = await fetch('http://localhost:3000/distributions/submitDistribution', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'credentials': 'include', // 인증 정보를 요청 헤더에 포함
+        },
+        body: JSON.stringify({
+          distributionDate,
+          distributionLocation,
+          donationType,
+          quantity,
+          amount,
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        alert(`Donation Distribution logged successfully!\n${JSON.stringify(result.distribution)}`);
+      } else {
+        alert('Failed to log Donation Distribution.');
+      }
+    } catch (error) {
+      console.error('Error logging Donation Distribution:', error);
+      alert('Internal Server Error');
+    }
+  } else {
+    alert('You are not logged in. Please log in to continue.');
+    window.location.href = '/login.html'; // 로그인 페이지로 리디렉션
+  }
+}
+
+    </script>
+  </body>
 </html>

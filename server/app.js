@@ -47,7 +47,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(authRouter);
+app.use('/auth',authRouter);
 app.use('/main', mainRoutes);
 app.use('/donations', donationRoutes);
 app.use('/distributions', distributionRoutes);

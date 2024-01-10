@@ -22,9 +22,26 @@ export const registerUser = async (req, res) => {
 };
 
 // Log in a user
-export const loginUser = passport.authenticate('local', {
-  failureRedirect: '/login-failure',
-});
+export const loginUser = (req, res) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      return res.status(500).json({ message: 'Internal Server Error' });
+    }
+
+    if (!user) {
+      return res.status(401).json({ message: 'Invalid username or password' });
+    }
+
+    req.login(user, (loginErr) => {
+      if (loginErr) {
+        return res.status(500).json({ message: 'Internal Server Error' });
+      }
+
+      // 로그인 성공
+      return res.status(200).json({ message: 'Login successful', user });
+    });
+  })(req, res);
+};
 
 // Log out a user
 export const logoutUser = (req, res) => {

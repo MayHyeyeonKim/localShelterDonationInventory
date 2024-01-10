@@ -21,7 +21,7 @@
     </nav>
 
     <!-- 로그인 폼 -->
-    <form id="loginForm" action="/login" method="post">
+    <form id="loginForm" action="/auth/login" method="post">
         <label for="loginUsername">Username:</label>
         <input type="text" id="loginUsername" name="username" required><br>
 
@@ -36,16 +36,36 @@
     </footer>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
-            // You can add custom logic here or submit the form using AJAX
-            alert('Login form submitted!');
-        });
+        document.getElementById('loginForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // 기본 폼 제출 방지
 
-        document.getElementById('signupForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
-            // You can add custom logic here or submit the form using AJAX
-            alert('Signup form submitted!');
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+
+            try {
+                const response = await fetch('/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username,
+                        password,
+                    }),
+                });
+
+                if (response.ok) {
+                    // 로그인 성공 시 추가적인 동작 수행
+                    alert('Login successful!');
+                    // 예: 로그인 후의 리다이렉션 등
+                } else {
+                    // 로그인 실패 시 추가적인 동작 수행
+                    alert('Login failed. Invalid username or password.');
+                }
+            } catch (error) {
+                console.error('Error during login:', error);
+                alert('Internal Server Error');
+            }
         });
     </script>
 </body>

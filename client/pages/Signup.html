@@ -22,7 +22,7 @@
 
 
     <!-- 회원가입 폼 -->
-    <form id="signupForm" action="/signup" method="post">
+    <form id="signupForm" action="/auth/signup" method="post">
         <label for="signupUsername">Username:</label>
         <input type="text" id="signupUsername" name="username" required><br>
 
@@ -37,17 +37,30 @@
     </footer>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
-            // You can add custom logic here or submit the form using AJAX
-            alert('Login form submitted!');
-        });
-
-        document.getElementById('signupForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
-            // You can add custom logic here or submit the form using AJAX
-            alert('Signup form submitted!');
-        });
+        async function handleSignup() {
+            const username = document.getElementById('signupUsername').value;
+            const password = document.getElementById('signupPassword').value;
+    
+            try {
+                const response = await fetch('/auth/signup', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username, password }),
+                });
+    
+                if (response.ok) {
+                    const result = await response.json();
+                    alert(`Signup successful!\n${JSON.stringify(result)}`);
+                } else {
+                    alert('Failed to signup.');
+                }
+            } catch (error) {
+                console.error('Error during signup:', error);
+                alert('Internal Server Error');
+            }
+        }
     </script>
 </body>
 </html>
