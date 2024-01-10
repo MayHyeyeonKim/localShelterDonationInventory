@@ -1,10 +1,9 @@
-// distributionRouters.js
 import express from 'express';
-import { submitDistribution, getDistributions } from '../controllers/donationDistributionController.js';
+import { submitDistribution } from '../controllers/distributionController.js';
+import { checkAuthentication } from '../middleware/authMiddleware.js';
 
 const distributionRouter = express.Router();
 
-distributionRouter.post('/submitDistribution', submitDistribution);
-distributionRouter.get('/getDistributions', getDistributions);
+distributionRouter.post('/submitDistribution', checkAuthentication, submitDistribution);
 
 export default distributionRouter;
