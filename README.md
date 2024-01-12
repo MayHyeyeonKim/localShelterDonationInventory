@@ -40,4 +40,4 @@ Before running the server, make sure to follow these steps:
 
 Feel free to customize the port number, directory paths, and environment variables based on your project configuration.
 
-For any additional information or issues, please refer to the project documentation.
+For any additional information or issues, please leave a message on GitHub issues.
