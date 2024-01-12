@@ -52,31 +52,31 @@ app.use(express.static('public'));
 app.use(express.static(join(__dirname, 'client')));
 
 app.get('/Signup.html', (req, res) => {
-  res.sendFile(join(__dirname, '../client/pages/Signup.html'));
+  res.sendFile(join(__dirname, '/client/pages/Signup.html'));
 });
 
 app.get('/login.html', (req, res) => {
-    res.sendFile(join(__dirname, '../client/pages/login.html'));
+    res.sendFile(join(__dirname, '/client/pages/login.html'));
 });
 
 app.get('/donationReport.html', (req, res) => {
-  res.sendFile(join(__dirname, '../client/pages/donationReport.html'));
+  res.sendFile(join(__dirname, '/client/pages/donationReport.html'));
 });
 
 app.get('/distribution.html', (req, res) => {
-  res.sendFile(join(__dirname, '../client/pages/distribution.html'));
+  res.sendFile(join(__dirname, '/client/pages/distribution.html'));
 });
 
 app.get('/donationList.html', (req, res) => {
-  res.sendFile(join(__dirname, '../client/pages/donationList.html'));
+  res.sendFile(join(__dirname, '/client/pages/donationList.html'));
 });
 
 app.get('/donation.html', (req, res) => {
-  res.sendFile(join(__dirname, '../client/pages/donation.html'));
+  res.sendFile(join(__dirname, '/client/pages/donation.html'));
 });
 
 app.get('*', (req, res) => {
-  res.sendFile(join(__dirname, '../client/pages/index.html'));
+  res.sendFile(join(__dirname, '/client/pages/index.html'));
 });
 
 app.listen(port, () => {
